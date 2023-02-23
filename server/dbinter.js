@@ -10,7 +10,8 @@ var con = mysql.createConnection({
   host: "localhost",
   user: "test",
   password: pass.getPass(),
-  port: "3454"
+  port: "3454",
+  database: "users"
 });
 
 //may need to do encryption on both ends in future
@@ -21,7 +22,9 @@ con.connect(function(err) {
 
 function createUser (nameRec, passRec) { 
   if (nameRec && passRec) {
-    let sql = `INSERT INTO userlogins (name, password) VALUES (${nameRec, passRec})`;
+    console.log(typeof nameRec);
+    console.log(nameRec);
+    let sql = `INSERT INTO userlogins (name, password) VALUES ('${nameRec}', '${passRec}')`;
     con.query(sql, (err, result) => {
       if (err) throw err;
       console.log("creating user: " + nameRec);
@@ -37,4 +40,4 @@ function getCreds (userName, passWord) {
 
 //check incoming for symbols, double check sql injections
 
-module.export = {getCreds, createUser}
+module.exports = {getCreds, createUser}
