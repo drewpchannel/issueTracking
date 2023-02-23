@@ -17,7 +17,7 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/createuser", (req, res) => {
-  console.log(req.body.users[0].name);
+  console.log(req.body.user[0].name);
   console.log('sending new user data...');
   //dbinter.createUser('test', 'test');
 });
