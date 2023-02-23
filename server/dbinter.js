@@ -17,8 +17,9 @@ var con = mysql.createConnection({
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-  let nameRec;
-  let passRec;
+});
+
+function createUser (nameRec, passRec) { 
   if (nameRec && passRec) {
     let sql = `INSERT INTO userlogins (name, password) VALUES (${nameRec, passRec})`;
     con.query(sql, (err, result) => {
@@ -28,9 +29,7 @@ con.connect(function(err) {
   } else {
     console.log('name still null');
   }
-});
-
-
+}
 
 function getCreds (userName, passWord) {
     console.log(pass.getPass());
@@ -38,4 +37,4 @@ function getCreds (userName, passWord) {
 
 //check incoming for symbols, double check sql injections
 
-module.export = {getCreds}
+module.export = {getCreds, createUser}
