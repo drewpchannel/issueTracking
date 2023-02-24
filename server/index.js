@@ -19,7 +19,7 @@ app.get("/api", (req, res) => {
 app.post("/createuser", (req, res) => {
   console.log(req.body.user[0].name);
   console.log('sending new user data...');
-  dbinter.createUser(req.body.user[0].name, req.body.user[0].password);
+  dbinter.checkUserInfo(req.body.user[0].name, req.body.user[0].password);
 });
 
 app.listen(PORT, () => {
