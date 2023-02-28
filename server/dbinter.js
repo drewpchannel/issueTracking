@@ -1,8 +1,8 @@
 /* port 3454 x 33454
 ---work99
 ---work88 for user test 
-
 */
+
 const pass = require('./password');
 var mysql = require('mysql');
 
@@ -33,24 +33,20 @@ function createUser(nameRec, passRec) {
 }
 
 function checkUserInfo(nameRec, passRec) {
-  let checkForUser = `SELECT * FROM userlogins WHERE name = '${nameRec}';`;
-  con.query(checkForUser, (err, result) => {
-    console.log(Object.keys(result).length);
-    //result is 6, should not return true but it is...
-    if (err) throw err;
-    if (Object.keys(result).length === 0) {
-      createUser(nameRec, passRec);
-    } else {
-      //enter login info and function
-      console.log('trying to say false')
-    }
-  });
+  return new Promise((resolve, reject) => {
+    let queryTxt = `SELECT * FROM userlogins WHERE name = '${nameRec}';`;
+    con.query(queryTxt, (err, result) => {
+      let x = Object.keys(result).length;
+      if (err) throw err;
+      if (x >= 1) {
+        resolve(x);
+      } else {
+        createUser(nameRec, passRec);
+        resolve("created");
+      }
+    })
+  })
 }
-
-function getCreds(userName, passWord) {
-    console.log(pass.getPass());
-}
-
 //check incoming for symbols, double check sql injections
 
-module.exports = {getCreds, checkUserInfo}
+module.exports = {checkUserInfo}

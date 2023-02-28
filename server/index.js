@@ -16,10 +16,10 @@ app.get("/api", (req, res) => {
   res.json({message: "Hello"});
 });
 
-app.post("/createuser", (req, res) => {
-  console.log(req.body.user[0].name);
-  console.log('sending new user data...');
-  dbinter.checkUserInfo(req.body.user[0].name, req.body.user[0].password);
+app.post("/createuser", async (req, res) => {
+  console.log('user login requested...');
+  let x = await dbinter.checkUserInfo(req.body.user[0].name, req.body.user[0].password);
+  res.send({dbRes: x});
 });
 
 app.listen(PORT, () => {
