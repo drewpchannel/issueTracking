@@ -39,7 +39,11 @@ function checkUserInfo(nameRec, passRec) {
       let x = Object.keys(result).length;
       if (err) throw err;
       if (x >= 1) {
-        resolve(x);
+        if (result[0].password === passRec) {
+          resolve(x);
+        } else {
+          resolve('invalid password');
+        }
       } else {
         createUser(nameRec, passRec);
         resolve("created");
