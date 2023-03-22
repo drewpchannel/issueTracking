@@ -24,8 +24,8 @@ app.post("/createuser", async (req, res) => {
 });
 
 app.post("/emailDrop", async (req, res) => {
-  console.log('email dropped...');
-  let x = await emailparser.checkForTable('drew');
+  console.log('email drop');
+  let x = await emailparser.checkForTable(req.body.user[0].username);
   res.send({dbRes: 'placeholder'});
 });
 
