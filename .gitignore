@@ -1,0 +1,5 @@
+*.log
+temp/
+node_modules/
+/server/password.js
+/server/oldcode.js
