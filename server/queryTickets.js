@@ -50,11 +50,9 @@ function checkForTable(username) {
 async function getTickets(username) {
 	let x = await checkForTable(username);
 	return new Promise ((resolve, reject) => {
-		console.log('if in tickets true');
 		const sql = `select * from ${username}`;
 		con.query(sql, (err, result) => {
 		  if (err) throw err;
-		  console.log('returning results')
 		  resolve(result);
 		});
 	})

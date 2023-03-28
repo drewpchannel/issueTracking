@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require('cors');
 const dbinter = require('./dbinter');
 const queryTickets = require('./queryTickets');
-const emailparser = require('./emailparser');
+const ticketUpdater = require('./ticketUpdater');
 const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 3001;
@@ -25,10 +25,20 @@ app.post("/createuser", async (req, res) => {
 });
 
 //rename this to ticket posting
-app.post("/emailDrop", async (req, res) => {
-  console.log('email drop');
+app.post("/updateTickets", async (req, res) => {
+  console.log('ticket change attempt...');
   if (req.body.user[0].username) {
-    let x = await emailparser.checkForTable(req.body.user[0].username);
+    if (req.body.user[0].file.ticket[0].id) {
+      let x = await ticketUpdater.checkForTable(
+        req.body.user[0].username, 
+        req.body.user[0].file.ticket[0].id,
+        req.body.user[0].file.ticket[0].afrom,
+        req.body.user[0].file.ticket[0].asubject,
+        req.body.user[0].file.ticket[0].abody
+      );
+    } else {
+        let x = await ticketUpdater.checkForTable(req.body.user[0].username);
+    }
     res.send({dbRes: req.body});
   } else {
     res.send({dbRes: "username not found"});
@@ -39,7 +49,6 @@ app.post("/ticketCheck", async (req, res) => {
   if (req.body.user) {
     if (req.body.user[0].username) {
       console.log('requesting tickets for ' + req.body.user[0].username);
-      //possibly change querytickets.gettickets to return a promise object
       let x = await queryTickets.getTickets(req.body.user[0].username);
       console.log('this is x: ' + x)
       res.send({dbRes: x});

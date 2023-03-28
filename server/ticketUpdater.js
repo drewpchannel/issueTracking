@@ -16,7 +16,16 @@ con.connect(function(err) {
   console.log("Connected!");
 });
 
-function checkForTable(username) {
+function updateTableInfo(username, id, afrom, asubject, abody) {
+  let sql = `INSERT INTO ${username} (id, afrom, asubject, abody) VALUES ('${id}', '${afrom}', '${asubject}', '${abody}');`;
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log("updating ticket for " + username);
+  });
+}
+
+//need to add script to update information after table creation
+function checkForTable(username, id, afrom, asubject, abody) {
   const sql = `show tables like '${username}'`;
   con.query(sql, (err, result) => {
     if (err) throw err;
@@ -29,6 +38,9 @@ function checkForTable(username) {
       });
     } else {
       console.log('found user\'s table');
+      if (afrom && abody && asubject) {
+        updateTableInfo(username, id, afrom, asubject, abody);
+      }
     }
   });
 }
