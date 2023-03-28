@@ -1,10 +1,6 @@
-/* port 3454 x 33454
----work99
----work88 for user test 
-*/
-
 const pass = require('./password');
 var mysql = require('mysql');
+const fs = require('fs');
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -21,12 +17,12 @@ con.connect(function(err) {
 });
 
 function checkForTable(username) {
-  const sql = 'show tables like "drew"';
+  const sql = `show tables like '${username}'`;
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result.length === 0) {
       console.log('Table not found for ' + username + ', creating...');
-      tableSQL = `CREATE TABLE drew (afrom VARCHAR(100), asubject VARCHAR(100), abody VARCHAR(600))`;
+      tableSQL = `CREATE TABLE ${username} (aid VARCHAR(100), afrom VARCHAR(100), asubject VARCHAR(100), abody VARCHAR(600))`;
       con.query(tableSQL, (err, result) => {
         if (err) throw err;
         console.log('new user table create runs');
