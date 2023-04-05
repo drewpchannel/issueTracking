@@ -4,7 +4,7 @@ const pass = require('./password');
 var con = mysql.createConnection({
   host: "localhost",
   user: "test",
-  password: pass.getPass(),
+  password: pass,
   port: "3306",
   database: "users"
 });
@@ -36,7 +36,6 @@ function checkForTable(username) {
 		    tableSQL = `CREATE TABLE ${username} (id VARCHAR(100), afrom VARCHAR(100), asubject VARCHAR(100), abody VARCHAR(600))`;
 		    con.query(tableSQL, (err, result) => {
 		    	//removed throw error, react dev running this twice and causing sql to report an error for table existing
-		      console.log('new user table create runs');
 		      resolve();
 		    });
 		  } else {

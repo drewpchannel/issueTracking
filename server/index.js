@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/api", (req, res) => {
-  console.log('got req for api');
   res.json({message: "Hello"});
 });
 
@@ -46,11 +45,10 @@ app.post("/updateTickets", async (req, res) => {
 });
 
 app.post("/ticketCheck", async (req, res) => {
-  if (req.body.user) {
+  if (req.body.user && req.body.user[0].username.length < 30) {
     if (req.body.user[0].username) {
       console.log('requesting tickets for ' + req.body.user[0].username);
       let x = await queryTickets.getTickets(req.body.user[0].username);
-      console.log('this is x: ' + x)
       res.send({dbRes: x});
     } else {
       res.send({dbRes: "username not found"});

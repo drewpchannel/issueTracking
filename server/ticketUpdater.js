@@ -5,7 +5,7 @@ const fs = require('fs');
 var con = mysql.createConnection({
   host: "localhost",
   user: "test",
-  password: pass.getPass(),
+  password: pass,
   port: "3306",
   database: "users"
 });
@@ -27,22 +27,26 @@ function updateTableInfo(username, id, afrom, asubject, abody) {
 //need to add script to update information after table creation
 function checkForTable(username, id, afrom, asubject, abody) {
   const sql = `show tables like '${username}'`;
-  con.query(sql, (err, result) => {
-    if (err) throw err;
-    if (result.length === 0) {
-      console.log('Table not found for ' + username + ', creating...');
-      tableSQL = `CREATE TABLE ${username} (aid VARCHAR(100), afrom VARCHAR(100), asubject VARCHAR(100), abody VARCHAR(600))`;
-      con.query(tableSQL, (err, result) => {
-        if (err) throw err;
-        console.log('new user table create runs');
-      });
-    } else {
-      console.log('found user\'s table');
-      if (afrom && abody && asubject) {
-        updateTableInfo(username, id, afrom, asubject, abody);
+  if (username.length > 30) {
+    console.log('error in username length');
+  } else {
+    con.query(sql, (err, result) => {
+      if (err) throw err;
+      if (result.length === 0) {
+        console.log('Table not found for ' + username + ', creating...');
+        tableSQL = `CREATE TABLE ${username} (aid VARCHAR(100), afrom VARCHAR(100), asubject VARCHAR(100), abody VARCHAR(600))`;
+        con.query(tableSQL, (err, result) => {
+          if (err) throw err;
+          console.log('new user table create runs');
+        });
+      } else {
+        console.log('found user\'s table');
+        if (afrom && abody && asubject) {
+          updateTableInfo(username, id, afrom, asubject, abody);
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 module.exports = {checkForTable}
