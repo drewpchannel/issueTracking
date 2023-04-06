@@ -48,7 +48,7 @@ app.post("/ticketCheck", async (req, res) => {
   if (req.body.user && req.body.user[0].username.length < 30) {
     if (req.body.user[0].username) {
       console.log('requesting tickets for ' + req.body.user[0].username);
-      let x = await queryTickets.getTickets(req.body.user[0].username);
+      let x = await queryTickets.getTickets(req.body.user[0].username, req.body.user[0].id);
       res.send({dbRes: x});
     } else {
       res.send({dbRes: "username not found"});
@@ -56,6 +56,14 @@ app.post("/ticketCheck", async (req, res) => {
   } else {
     res.send({dbRes: "req.body.user invalid"})
   }
+});
+
+app.post("/ticketDelete", async (req,res) => {
+  console.log('deleting ticket for... ' + req.body.username);
+  let x = await dbinter.deleteTicket(req.body.username, req.body.id)
+  .then(() => {
+    res.send({dbRes: 'done'})
+  });
 });
 
 app.listen(PORT, () => {
