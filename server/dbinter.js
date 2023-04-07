@@ -55,11 +55,16 @@ function checkUserInfo(nameRec, passRec) {
 
 function deleteTicket(username, id) {
   return new Promise((resolve, reject) => {
-    const sql = `DELETE FROM ${username} WHERE id = '${id}' LIMIT 1;`
-    con.query(sql, (err,result) => {
-      if (err) throw err;
-      resolve('done');
-    })
+    if(!username) {
+      console.log('username not found, not deleting');
+      resolve('username undefined in delete')
+    } else {
+      const sql = `DELETE FROM ${username} WHERE id = '${id}' LIMIT 1;`
+      con.query(sql, (err,result) => {
+        if (err) throw err;
+        resolve('done');
+      })
+    }
   }) 
 }
 
