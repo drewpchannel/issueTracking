@@ -6,6 +6,9 @@ todo:
   ticket comments
   add port to server file 
   sql injections check on submission forms
+  go through xss attacks, filter user inputs.  Maybe import DOMPurify and sanitize incoming?
+  outlook addon to copy message to clipboard
+  change password to hash, logout button, encrypt cookies
 
 Install:
   Create password file in issueTracking/server/password.js 

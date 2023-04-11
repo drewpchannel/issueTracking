@@ -62,8 +62,12 @@ app.post("/ticketDelete", async (req,res) => {
   console.log('deleting ticket for... ' + req.body.username);
   let x = await dbinter.deleteTicket(req.body.username, req.body.id)
   .then(() => {
-    res.send({dbRes: 'done'})
+    res.send({dbRes: 'done deleting'})
   });
+});
+
+app.post("/ticketChange", async (req,res) => {
+  let x = await dbinter.changeTicket(req.body.username, req.body.id, req.body.changeText);
 });
 
 app.listen(PORT, () => {

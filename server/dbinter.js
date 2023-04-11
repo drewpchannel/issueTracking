@@ -68,4 +68,18 @@ function deleteTicket(username, id) {
   }) 
 }
 
-module.exports = {checkUserInfo, deleteTicket}
+function changeTicket(username, id, changeText) {
+  return new Promise((res, rej) => {
+    if (username && id && changeText) {
+      const sql = `UPDATE ${username} SET abody='${changeText}' WHERE id='${id}'`
+      con.query(sql, (err, result) => {
+        if (err) throw err;
+        res('done');
+      })
+    } else {
+      res('usr id or text undefined');
+    }
+  })
+}
+
+module.exports = {checkUserInfo, deleteTicket, changeTicket}
