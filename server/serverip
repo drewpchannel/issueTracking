@@ -1,0 +1,3 @@
+const mySQLip = '10.16.33.59';
+
+export { mySQLip };

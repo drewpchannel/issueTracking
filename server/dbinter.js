@@ -7,7 +7,7 @@ const pass = require('./password');
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-  host: "localhost",
+  host: "10.16.35.193",
   user: "test",
   password: pass,
   port: "3306",

@@ -45,6 +45,7 @@ app.post("/updateTickets", async (req, res) => {
 });
 
 app.post("/ticketCheck", async (req, res) => {
+  console.log('user body is ' + req.body.user);
   if (req.body.user && req.body.user[0].username.length < 30) {
     if (req.body.user[0].username) {
       console.log('requesting tickets for ' + req.body.user[0].username);
